@@ -6,7 +6,7 @@
 # See README.md "Concurrency and LLM Provider 429 Rate Limit Errors" section for tuning guidance
 
 server:
-  transport: "http"  # Options: stdio, sse (deprecated), http
+  transport: "stdio"  # Options: stdio, sse (deprecated), http
   host: "0.0.0.0"
   port: 8000
   
@@ -71,7 +71,7 @@ embedder:
       model: "voyage-3"
 
 database:
-  provider: "falkordb"  # Default: falkordb. Options: neo4j, falkordb
+  provider: "neo4j"  # Default: falkordb. Options: neo4j, falkordb
 
   providers:
     falkordb:
