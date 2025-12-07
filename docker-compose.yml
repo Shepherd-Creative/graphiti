@@ -1,6 +1,8 @@
 services:
   graph:
+    container_name: graphiti-memory
     profiles: [""]
+    restart: unless-stopped
     build:
       context: .
     ports:
@@ -27,8 +29,10 @@ services:
       - PORT=8000
       - db_backend=neo4j
   neo4j:
+    container_name: graphiti-neo4j
     image: neo4j:5.26.2
     profiles: [""]
+    restart: unless-stopped
     healthcheck:
       test:
         [
@@ -43,7 +47,7 @@ services:
       - "7474:7474" # HTTP
       - "${NEO4J_PORT:-7687}:${NEO4J_PORT:-7687}" # Bolt
     volumes:
-      - neo4j_data:/data
+      - docker_neo4j_data:/data
     environment:
       - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
 
@@ -88,5 +92,6 @@ services:
       - db_backend=falkordb
 
 volumes:
-  neo4j_data:
+  docker_neo4j_data:
+    external: true
   falkordb_data:
